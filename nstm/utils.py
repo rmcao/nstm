@@ -25,7 +25,7 @@ def update_flags(args):
 
     # check if args.config ends with .yaml
     if not args.config.endswith(".yaml"):
-        pth = path.join('./configs/', args.config + ".yaml")
+        pth = path.join('./examples/configs/', args.config + ".yaml")
     else:
         pth = args.config
     with open(pth, mode="r") as fin:

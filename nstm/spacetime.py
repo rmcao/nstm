@@ -1,5 +1,5 @@
 # Description:
-#  
+#  Implementation of neural space-time model.
 # Written by Ruiming Cao on September 10, 2021
 # Contact: rcao@berkeley.edu
 # Website: https://rmcao.github.io
