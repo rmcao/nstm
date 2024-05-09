@@ -1,0 +1,19 @@
+raw_path: ./examples/diffusercam_data_from_NickAntipa/tennis_bounce_00182.tif
+psf_path: ./examples/diffusercam_data_from_NickAntipa/psf_averaged_2018-12-5.tif
+save_path: ./examples/checkpoint/tennis/
+num_epoch: 200
+num_lines_per_forward: 20
+batch_size: 1
+background_int: 103
+lr_init_motion: 1e-5
+lr_init_object: 1e-3
+annealed_rate: 0.8
+object_hash_base: [4, 4]
+object_hash_fine: [162, 192]
+motion_hash_base: [1, 1, 1]
+motion_hash_fine: [27, 32, 12]
+update_every_motion: 1
+update_every_object: 1
+object_act_fn: gelu
+motion_act_fn: elu
+nonneg_reg_w: 1e-6

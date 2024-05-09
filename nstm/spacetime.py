@@ -246,7 +246,7 @@ class SpaceTimeMLP(cc.forward.Model):
         return output
 
     def get_motion_map(self, t, coord_offset, alpha=1e5):
-        list_zyx = np.tile(self.list_coord, (t.shape[0], 1, 1))
+        list_zyx = jnp.tile(self.list_coord, (t.shape[0], 1, 1))
         list_zyx = list_zyx + coord_offset[:, np.newaxis, :]
 
         list_zyxt = jnp.concatenate([list_zyx,
