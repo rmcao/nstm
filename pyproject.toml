@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nstm"
+version = "0.1"
+dynamic = ["dependencies"]
+#dynamic = ["version"]
+authors = [
+  { name="Ruiming Cao", email="rcao@berkeley.edu" }
+]
+description = "Neural space-time model for dynamic scene modeling and image reconstruction"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD-3-Clause",
+    "Operating System :: POSIX :: Linux",
+]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.optional-dependencies]
+dev = [
+]
+
+[project.urls]
+"Homepage" = "https://github.com/rmcao/nstm"
+
+#[tool.setuptools_scm]
+#write_to = "nstm/_version.py"
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["nstm*"]
