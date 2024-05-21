@@ -261,12 +261,45 @@ def main(unused_argv):
 def define_model(optical_param, sim_param):
     assert FLAGS.object_hash_boundary_x >= 0, "object_hash_boundary_x must be non-negative."
 
-    object_hash_base = np.array([float(s) for s in FLAGS.object_hash_base])
-    object_hash_fine = np.array([float(s) for s in FLAGS.object_hash_fine])
+    # set up object net hash parameter based on ratio of object size
+    object_hash_fine = np.array([FLAGS.object_hash_ratio_z * optical_param.dim_zyx[0],
+                                 FLAGS.object_hash_ratio * optical_param.dim_zyx[1] / FLAGS.zoomfact,
+                                 FLAGS.object_hash_ratio * optical_param.dim_zyx[2] / FLAGS.zoomfact])
+    object_hash_base = object_hash_fine * np.array([0.3, 0.1, 0.1])
+    if optical_param.dim_zyx[0] == 1:
+        object_hash_base[0] = 1
+        object_hash_fine[0] = 1
+
+    # set up motion net hash parameter based on ratio of fine object hash
+    motion_hash_fine = np.array([object_hash_fine[0] * FLAGS.motion_hash_ratio_z,
+                                 object_hash_fine[1] * FLAGS.motion_hash_ratio,
+                                 object_hash_fine[2] * FLAGS.motion_hash_ratio,
+                                 FLAGS.motion_hash_temporal])
+    motion_hash_base = motion_hash_fine * np.array([1./3, 0.1, 0.1, 1])
+    motion_hash_base[3] = 1
+    if optical_param.dim_zyx[0] == 1:
+        motion_hash_base[0] = 1
+        motion_hash_fine[0] = 1
+
+    if FLAGS.object_hash_base is not None:
+        print('object_hash_base is specified to: ', FLAGS.object_hash_base)
+        object_hash_base = np.array([float(s) for s in FLAGS.object_hash_base])
+    if FLAGS.object_hash_fine is not None:
+        print('object_hash_fine is specified to: ', FLAGS.object_hash_fine)
+        object_hash_fine = np.array([float(s) for s in FLAGS.object_hash_fine])
+
     object_hash_base[1:] *= (1 + FLAGS.object_hash_boundary_x)
     object_hash_fine[1:] *= (1 + FLAGS.object_hash_boundary_x)
-    motion_hash_base = [float(s) for s in FLAGS.motion_hash_base]
-    motion_hash_fine = [float(s) for s in FLAGS.motion_hash_fine]
+
+    if FLAGS.motion_hash_base is not None:
+        print('motion_hash_base is specified to: ', FLAGS.motion_hash_base)
+        motion_hash_base = [float(s) for s in FLAGS.motion_hash_base]
+    if FLAGS.motion_hash_fine is not None:
+        print('motion_hash_fine is specified to: ', FLAGS.motion_hash_fine)
+        motion_hash_fine = [float(s) for s in FLAGS.motion_hash_fine]
+
+    print('Hash embedding for object net: base - ', object_hash_base, ' fine - ', object_hash_fine)
+    print('Hash embedding for motion net: base - ', motion_hash_base, ' fine - ', motion_hash_fine)
 
     # set up model parameters
     hash_param = spacetime.HashParameters(
@@ -285,7 +318,7 @@ def define_model(optical_param, sim_param):
     hash_param_motion_spacetime = spacetime.HashParameters(
         bounding_box=(np.array([0, 0, 0, -1]), np.array([optical_param.dim_zyx[0] * 2, optical_param.dim_zyx[1], optical_param.dim_zyx[2], 1])),
         n_levels=8, n_features_per_level=2, log2_hashmap_size=16, base_resolution=np.array(motion_hash_base),
-        finest_resolution=np.array(motion_hash_fine[:3] + [motion_hash_fine[3] * FLAGS.num_stack]))
+        finest_resolution=np.array(list(motion_hash_fine[:3]) + [motion_hash_fine[3] * FLAGS.num_stack,]))
 
     motion_embedding_param = {'space': hash_param_motion_space, 'time': hash_param_motion_time}
 

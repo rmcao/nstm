@@ -19,10 +19,7 @@ lr_init_motion: 5e-5
 lr_init_object: 5e-3
 lr_init_modamp: 0
 annealed_rate: 0.8
-object_hash_base: [5, 24, 24]
-object_hash_fine: [16, 240, 240]
-motion_hash_base: [5, 1, 1, 1]
-motion_hash_fine: [15, 20, 20, 5]
+object_hash_ratio: 0.75
 nonneg_reg_w: 5e-6
 update_every_motion: 1
 update_every_object: 1

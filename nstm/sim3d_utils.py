@@ -84,6 +84,25 @@ def define_flags():
                         "activation function for the output of object MLP.")
     flags.DEFINE_float("annealed_rate", 0.8,
                        "the percentage of epochs to have anneal hash embedding.")
+    flags.DEFINE_float("object_hash_boundary_x", 1.0,
+                       "the boundary extension ratio of the object hash grid. 0 for no extension from the image "
+                       "dimension. 1 (default) for 50% extension on each side.")
+
+    # hash parameters simple
+    flags.DEFINE_float("object_hash_ratio", 0.8,
+                       "the ratio of fine resolution (for the hash function of the object net) to the input "
+                       "image dimension.")
+    flags.DEFINE_float("object_hash_ratio_z", 0.8,
+                       "the ratio of fine z-resolution (for the hash function of the object net) to the input "
+                       "image stack z-dimension.")
+    flags.DEFINE_float("motion_hash_ratio", 0.1,
+                       "the ratio of motion hash fine resolution to object hash fine resolution.")
+    flags.DEFINE_float("motion_hash_ratio_z", 0.95,
+                       "the ratio of motion hash fine resolution to object hash fine resolution in z dimension.")
+    flags.DEFINE_float("motion_hash_temporal", 5,
+                       "the fine temporal resolution for the hash function of the motion net.")
+
+    # hash parameters (will overwrite simple parameters above)
     flags.DEFINE_list("object_hash_base", None,
                       "the base resolution for the hash function of the object.")
     flags.DEFINE_list("object_hash_fine", None,
@@ -92,9 +111,6 @@ def define_flags():
                       "the base resolution for the hash function of the motion (zyxt or yxt).")
     flags.DEFINE_list("motion_hash_fine", None,
                       "the fine resolution for the hash function of the motion (zyxt or yxt).")
-    flags.DEFINE_float("object_hash_boundary_x", 1.0,
-                       "the boundary extension ratio of the object hash grid. 0 for no extension from the image "
-                       "dimension. 1 (default) for 50% extension on each side.")
 
     # loss parameters
     flags.DEFINE_integer("l2_loss_margin", 2,
