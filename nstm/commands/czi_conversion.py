@@ -1,8 +1,20 @@
-# czi_conversion.py - Description:
-#  Convert .czi image stack into .tif image stack.
-# Created by Ruiming Cao on Aug 23, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Convert .czi image stack (saved by Zeiss microscopes) into .tif image stack.
+
+This script is used to convert .czi image stack into .tif image stack. The .czi file is saved by Zeiss microscopes
+and contains 3D SIM data. While the .czi file can be directly loaded by the SIM3DDataLoader class in nstm.datasets,
+.tif file can be handy for fiji or other image processing software. The .czi file can contain multiple timepoints,
+and the user need to choose to convert a specific timepoint by setting the flag ``timepoint_ind``. The user can also choose
+to extract a specific region of interest by setting the flag ``zyxshw``. The .tif file is saved in the format of
+``orientation -> z -> phase`` by default. The user can also choose to save the .tif file in the format of
+``z -> orientation -> phase`` by setting the flag ``z_first=True``.
+
+Example:
+    Convert and save the timepoint_ind=1 from a .czi file into .tif file::
+
+        $ python czi_conversion.py --czi_path=path/to/example.czi --save_path=path/to/example.tif --timepoint_ind=1
+
+"""
 
 from absl import flags
 from absl import app
