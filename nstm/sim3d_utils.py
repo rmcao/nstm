@@ -24,7 +24,7 @@ def define_flags():
     flags.DEFINE_integer("seed", 0, "Seed for random number generators.")
 
     # data parameters
-    flags.DEFINE_string("data_dir", None, "input data directory.")
+    flags.DEFINE_string("data_dir", '.', "input data directory.")
     flags.DEFINE_string("raw_path", None, "raw 3D SIM image path. regex for multiple files of time series acquisition."
                                           "Supported formats: .tif, .czi, and .npz. The .npz file has to be generated "
                                           "by process_raw_images.py script or follow the same organization. When a "
