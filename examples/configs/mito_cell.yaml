@@ -6,7 +6,6 @@ batch_size: 1
 l2_loss_margin: 2
 line_spacing: [0.419307, 0.419277, 0.419291]
 k0angles: [1.843549, 2.960755, -2.315973]
-ndirs: 3
 na: 1.28
 ri_medium: 1.33
 wavelength: 0.515
@@ -21,6 +20,4 @@ lr_init_modamp: 0
 annealed_rate: 0.8
 object_hash_ratio: 0.75
 nonneg_reg_w: 5e-6
-update_every_motion: 1
-update_every_object: 1
 padding_z: 2
