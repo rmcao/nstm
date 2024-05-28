@@ -26,9 +26,6 @@ from nstm import spacetime
 
 FLAGS = flags.FLAGS
 
-sim3d_utils.define_flags()
-config.parse_flags_with_absl()
-
 
 def main(unused_argv):
     if FLAGS.config is not None:
@@ -392,4 +389,6 @@ def define_training_params(num_batches_per_epoch):
 
 
 if __name__ == "__main__":
+    sim3d_utils.define_flags()
+    config.parse_flags_with_absl()
     app.run(main)

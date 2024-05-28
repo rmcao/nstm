@@ -13,12 +13,14 @@ from aicsimageio.readers.czi_reader import CziReader
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("czi_path", "", "The path to the czi file.")
-flags.DEFINE_float("exposure_time", 5, "The exposure time in ms.")
-flags.DEFINE_float("delay_rot", 300, "The delay time for each grating rotation in ms. Default: 1500ms.")
-flags.DEFINE_float("delay_phase", 20, "The delay time for each phase shift in ms. Default: 100ms.")
-flags.DEFINE_float("delay_z", 20, "The delay time for each z step in ms. Default: 100ms.")
-flags.DEFINE_bool("z_first", False, "Output as z -> orientation -> phase. Default (False): orientation -> z -> phase.")
+
+def define_flags():
+    flags.DEFINE_string("czi_path", "", "The path to the czi file.")
+    flags.DEFINE_float("exposure_time", 5, "The exposure time in ms.")
+    flags.DEFINE_float("delay_rot", 300, "The delay time for each grating rotation in ms. Default: 1500ms.")
+    flags.DEFINE_float("delay_phase", 20, "The delay time for each phase shift in ms. Default: 100ms.")
+    flags.DEFINE_float("delay_z", 20, "The delay time for each z step in ms. Default: 100ms.")
+    flags.DEFINE_bool("z_first", False, "Output as z -> orientation -> phase. Default (False): orientation -> z -> phase.")
 
 
 def main(unused_argv):
@@ -65,4 +67,5 @@ def main(unused_argv):
 
 
 if __name__ == "__main__":
+    define_flags()
     app.run(main)

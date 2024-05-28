@@ -13,18 +13,21 @@ from nstm.datasets import SIM3DDataLoader
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("czi_path", "", "The path to the czi file.")
-flags.DEFINE_string("save_path", "", "The path to save tif file after conversion.")
-flags.DEFINE_integer("ndirs", 3, "The number of orientations in the SIM data.")
-flags.DEFINE_integer("nphases", 5, "The number of phases in the SIM data.")
-flags.DEFINE_integer("timepoint_ind", 0, "The index of timepoint for a time-series. 0 if there's a single timepoint.")
-flags.DEFINE_integer("starting_ori", 0, "The index of the starting orientation (for moving window).")
-flags.DEFINE_list("zyxshw", None, "The yxhw of the FOV to be extracted. If None, the whole FOV will be extracted.")
-flags.DEFINE_bool("z_first", False, "Output as z -> orientation -> phase. Default: orientation -> z -> phase.")
-flags.DEFINE_integer("select_ori", None, "Select a orientation index to output. "
-                                         "If None, all orientations will be output.")
-flags.DEFINE_bool("mix_rot", False, "Pick different rot from different "
-                  "timepoints in 3D SIM. This will artificially increase the time delay.")
+
+def define_flags():
+    flags.DEFINE_string("czi_path", "", "The path to the czi file.")
+    flags.DEFINE_string("save_path", "", "The path to save tif file after conversion.")
+    flags.DEFINE_integer("ndirs", 3, "The number of orientations in the SIM data.")
+    flags.DEFINE_integer("nphases", 5, "The number of phases in the SIM data.")
+    flags.DEFINE_integer("timepoint_ind", 0, "The index of timepoint for a time-series. 0 if there's a single timepoint.")
+    flags.DEFINE_integer("starting_ori", 0, "The index of the starting orientation (for moving window).")
+    flags.DEFINE_list("zyxshw", None, "The yxhw of the FOV to be extracted. If None, the whole FOV will be extracted.")
+    flags.DEFINE_bool("z_first", False, "Output as z -> orientation -> phase. Default: orientation -> z -> phase.")
+    flags.DEFINE_integer("select_ori", None, "Select a orientation index to output. "
+                                             "If None, all orientations will be output.")
+    flags.DEFINE_bool("mix_rot", False, "Pick different rot from different "
+                      "timepoints in 3D SIM. This will artificially increase the time delay.")
+
 
 def main(unused_argv):
     zyxshw = None
@@ -72,4 +75,5 @@ def main(unused_argv):
 
 
 if __name__ == "__main__":
+    define_flags()
     app.run(main)
