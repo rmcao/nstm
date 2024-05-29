@@ -1,8 +1,6 @@
-# Description:
-#  Implementation of neural space-time model.
-# Written by Ruiming Cao on September 10, 2021
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Implementation of neural space-time model for 2D/3D+time dynamic scene representations.
+"""
 
 import functools
 import numpy as np
@@ -19,6 +17,15 @@ from nstm.pos_encoding import AnnealedPosenc, PosencParameters
 
 
 def generate_dense_yx_coords(dim_yx, normalize=True):
+    """Generate a list of coordinates for a 2D grid.
+
+    Args:
+        dim_yx (Tuple[int, int]): the dimension of the 2D grid.
+        normalize (bool): whether to normalize the coordinates to [-1, 1].
+
+    Returns:
+        np.ndarray: the list of coordinates (number of coordinates, [y, x]).
+    """
     if normalize:
         xlin = np.arange(dim_yx[1]) / dim_yx[1] * 2 - 1
         ylin = np.arange(dim_yx[0]) / dim_yx[0] * 2 - 1
@@ -33,6 +40,16 @@ def generate_dense_yx_coords(dim_yx, normalize=True):
 
 
 def generate_dense_zyx_coords(dim_zyx, start_coord_zyx=None, normalize=True):
+    """Generate a list of coordinates for a 3D grid.
+
+    Args:
+        dim_zyx (Tuple[int, int, int]): the dimension of the 3D grid.
+        start_coord_zyx (Tuple[int, int, int]): the starting coordinate of the 3D grid.
+        normalize (bool): whether to normalize the coordinates to [-1, 1].
+
+    Returns:
+        np.ndarray: the list of coordinates (number of coordinates, [z, y, x]).
+    """
     if normalize and start_coord_zyx:
         raise ValueError('Cannot have custom start coord {} when normalize flag is turned on'.format(start_coord_zyx))
 
@@ -56,45 +73,78 @@ def generate_dense_zyx_coords(dim_zyx, start_coord_zyx=None, normalize=True):
 
 @dataclass
 class MLPParameters:
-    net_depth: int  # The depth of the first part of MLP.
-    net_width: int  # The width of the first part of MLP.
-    net_activation: Callable[..., Any] # The activation function.
-    skip_layer: int  # The layer to add skip layers to.
+    """Parameters for the MLP model.
+
+    Args:
+        net_depth (int): The depth of MLP.
+        net_width (int): The width of MLP.
+        net_activation (Callable): The activation function.
+        skip_layer (int): The layer to add skip layers to.
+        kernel_init (Callable): network weight initializer
+    """
+    net_depth: int
+    net_width: int
+    net_activation: Callable[..., Any]
+    skip_layer: int
     kernel_init: Callable = jax.nn.initializers.glorot_uniform()
 
 
 @dataclass
 class SpaceTimeParameters:
+    """Parameters for the space-time model.
+
+    Args:
+        motion_mlp_param (MLPParameters): Parameters for the motion network.
+        object_mlp_param (MLPParameters): Parameters for the scene network.
+        motion_embedding (Union[str, None]): The type of input embedding for motion network.
+        motion_embedding_param (Union[Dict, HashParameters, PosencParameters]):
+            Parameters for the motion network's input embedding.
+        object_embedding (Union[str, None]): The type of input embedding for scene network.
+        object_embedding_param (Union[Dict, HashParameters, PosencParameters]):
+            Parameters for the object network's input embedding.
+        out_activation (Callable[..., Any]): The activation function for MLP output.
+    """
+
     motion_mlp_param: MLPParameters
     object_mlp_param: MLPParameters
     motion_embedding: Union[str, None]
     motion_embedding_param: Union[Dict, HashParameters, PosencParameters]
     object_embedding: Union[str, None]
     object_embedding_param: Union[Dict, HashParameters, PosencParameters]
-    out_activation: Callable[..., Any]  # The activation function for MLP output
+    out_activation: Callable[..., Any]
 
 
 class MLP(cc.forward.Model):
-    """A simple MLP with a condition term option adding after the first layer of the network."""
-    net_depth: int = 8  # The depth of the MLP.
-    net_width: int = 256  # The width of the MLP.
-    net_activation: Callable = nn.relu  # The activation function.
-    skip_layer: int = 4  # The layer to add skip layers to.
-    num_output_channels: int = 1  # The number of sigma channels.
-    kernel_init: Callable = jax.nn.initializers.glorot_uniform()  # kernel weight initializer
-    precision: nn.linear.PrecisionLike = None  # precision of the network
-    param_dtype: Any = jnp.float32  # data type of the parameters
+    """A simple MLP with an option to add skip connections.
+
+    Args:
+        net_depth (int): The depth of the MLP.
+        net_width (int): The width of the MLP.
+        net_activation (Callable): The activation function.
+        skip_layer (int): The layer to add skip layers to.
+        num_output_channels (int): The number of output channels.
+        kernel_init (Callable): weight initializer
+        precision (nn.linear.PrecisionLike): arithmetic precision of the network
+        param_dtype (jnp.dtype): data type of the parameters
+    """
+    net_depth: int = 8
+    net_width: int = 256
+    net_activation: Callable = nn.relu
+    skip_layer: int = 4
+    num_output_channels: int = 1
+    kernel_init: Callable = jax.nn.initializers.glorot_uniform()
+    precision: nn.linear.PrecisionLike = None
+    param_dtype: Any = jnp.float32
 
     @nn.compact
     def __call__(self, x):
         """Evaluate the MLP.
 
         Args:
-          x: jnp.ndarray(float32), [batch, num_samples, feature], points.
+          x (jnp.ndarray): list of input features to evaluate, [batch, num_samples, feature].
 
         Returns:
-          output: jnp.ndarray(float32), with a shape of
-               [batch, num_samples, num_rgb_channels].
+          output (jnp.ndarray): MLP output values, [batch, num_samples, num_outpuut_channels].
         """
         input_dim = x.shape[:-1]
         feature_dim = x.shape[-1]
@@ -115,20 +165,22 @@ class MLP(cc.forward.Model):
 
 
 class SpaceTimeMLP(cc.forward.Model):
-    """
-    Neural space-time model. The model takes a time embedding and a spatial embedding as input, and outputs the object's
+    """Implementation of neural space-time model.
+
+    The model takes the spatial and temporal coordinate as an input, and outputs the object's
     properties at the given time and spatial location.
 
-    Attributes:
-        optical_param: SystemParameters, the optical parameters.
-        spacetime_param: SpaceTimeParameters, the space-time parameters.
-        num_output_channels: int, the number of output channels.
-        reduced_z: int, the reduced z dimension.
+    Args:
+        optical_param (Union[utils.SystemParameters, utils.SystemParameters3D, Tuple[int, int], Tuple[int, int, int]):
+            the optical parameters to specify matrix size. Can alternatively directly specify the matrix size using a
+            tuple of (y,x) or (z,y,x).
+        spacetime_param (SpaceTimeParameters): the space-time parameters.
+        num_output_channels (int): the number of output channels.
+        precision (str, optional): the arithmetic precision of the model.
     """
-    optical_param: Union[utils.SystemParameters, utils.SystemParameters3D]
+    optical_param: Union[utils.SystemParameters, utils.SystemParameters3D, Tuple[int, int], Tuple[int, int, int]]
     spacetime_param: SpaceTimeParameters
     num_output_channels: int
-    reduced_z: int = 0
     precision: str = 'float32'
 
     def setup(self):
@@ -141,20 +193,30 @@ class SpaceTimeMLP(cc.forward.Model):
         else:
             raise NotImplementedError(f'precision = {self.precision} not implemented.')
 
-        if 'dim_yx' in self.optical_param.__annotations__:
-            self.ndim = 2
-        elif 'dim_zyx' in self.optical_param.__annotations__:
-            self.ndim = 3
-        else:
-            raise ValueError('Wrong input for optical_param.')
+        if isinstance(self.optical_param, tuple):
+            if len(self.optical_param) == 2:
+                self.ndim = 2
+            elif len(self.optical_param) == 3:
+                self.ndim = 3
+            else:
+                raise ValueError('Wrong input for optical_param.')
 
-        if self.ndim == 3:
-            self.dim_x = (self.optical_param.dim_zyx[0] + self.optical_param.padding_zyx[0]*2 - self.reduced_z*2,
-                          self.optical_param.dim_zyx[1] + self.optical_param.padding_zyx[1]*2,
-                          self.optical_param.dim_zyx[2] + self.optical_param.padding_zyx[2]*2)
+            self.dim_x = self.optical_param
         else:
-            self.dim_x = (self.optical_param.dim_yx[0] + self.optical_param.padding_yx[0]*2,
-                          self.optical_param.dim_yx[1] + self.optical_param.padding_yx[1]*2)
+            if 'dim_yx' in self.optical_param.__annotations__:
+                self.ndim = 2
+            elif 'dim_zyx' in self.optical_param.__annotations__:
+                self.ndim = 3
+            else:
+                raise ValueError('Wrong input for optical_param.')
+
+            if self.ndim == 3:
+                self.dim_x = (self.optical_param.dim_zyx[0] + self.optical_param.padding_zyx[0]*2,
+                              self.optical_param.dim_zyx[1] + self.optical_param.padding_zyx[1]*2,
+                              self.optical_param.dim_zyx[2] + self.optical_param.padding_zyx[2]*2)
+            else:
+                self.dim_x = (self.optical_param.dim_yx[0] + self.optical_param.padding_yx[0]*2,
+                              self.optical_param.dim_yx[1] + self.optical_param.padding_yx[1]*2)
 
         # motion MLP
         self.motion_mlp = MLP(net_depth=self.spacetime_param.motion_mlp_param.net_depth,
@@ -207,7 +269,7 @@ class SpaceTimeMLP(cc.forward.Model):
             raise NotImplementedError(f'Object embedding: {self.spacetime_param.object_embedding} is not implemented.')
 
         if self.ndim == 3:
-            self.list_coord = jnp.asarray(generate_dense_zyx_coords(self.dim_x, start_coord_zyx=(self.reduced_z, 0, 0),
+            self.list_coord = jnp.asarray(generate_dense_zyx_coords(self.dim_x, start_coord_zyx=(0, 0, 0),
                                                                     normalize=False)[np.newaxis, :, :],
                                           dtype=self.param_dtype)
         elif self.ndim == 2:
