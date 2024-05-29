@@ -1,9 +1,13 @@
-# diffcam_flow.py - Description:
-#  Rolling shutter diffuserCam reconstruction with neural space-time model.
-# Created by Ruiming Cao on May 25, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Rolling shutter diffuserCam forward model with neural-space time model.
 
+This module contains the forward models for rolling shutter diffuserCam and rolling shutter diffuserCam with space-time
+modeling. The loss functions used for the rolling shutter diffuserCam reconstruction are also provided.
+
+This script heavily references on the following repository from Nick Antipa::
+
+    https://people.eecs.berkeley.edu/~nick.antipa/antipa_files/hsvideo_code_with_data.zip
+"""
 from typing import Tuple
 import numpy as np
 import jax.numpy as jnp

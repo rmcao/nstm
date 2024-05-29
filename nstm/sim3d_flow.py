@@ -1,8 +1,9 @@
-# Description:
-#  3D SIM forward model with neural-space time model
-# Written by Ruiming Cao on December 14, 2022
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""3D SIM forward model with neural-space time model.
+
+This module contains the forward models for 3D SIM and 3D SIM with space-time modeling. The loss functions used for the
+3D SIM reconstruction are also provided.
+"""
 
 from typing import Tuple, Union
 import numpy as np

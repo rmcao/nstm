@@ -1,8 +1,10 @@
-# diffcam_utils.py - Description:
-#  Rolling shutter diffuserCam utility functions. Heavily referenced from Nick Antipa's MATLAB code.
-# Created by Ruiming Cao on May 22, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Rolling shutter diffuserCam utility functions.
+
+Heavily referenced from Nick Antipa's MATLAB code::
+
+    https://people.eecs.berkeley.edu/~nick.antipa/antipa_files/hsvideo_code_with_data.zip
+"""
 
 import numpy as np
 from skimage import io as skimageio

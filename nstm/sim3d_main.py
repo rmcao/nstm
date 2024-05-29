@@ -1,8 +1,13 @@
-# sim3d_main.py - Description:
-#  Main script for 3D SIM reconstruction with neural-space time model.
-# Created by Ruiming Cao on Apr 23, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""3D SIM reconstruction with neural-space time model.
+
+Example:
+    To run the 3D SIM reconstruction, download the dataset and run the following command::
+
+        $ python ./nstm/sim3d_main.py --config=mito_cell
+
+    This will load args stored in examples/configs/mito_cell.yaml and run the 3D SIM reconstruction.
+"""
 import os
 import glob
 import warnings

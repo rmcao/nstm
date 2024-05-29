@@ -1,8 +1,10 @@
-# Description:
-#  Data utilities and dataset loader for 3D SIM data.
-# Written by Ruiming Cao on December 13, 2022
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Data utilities and dataset loader for 3D SIM data.
+
+The data loader is designed to load 3D SIM data with OTF and timestamp information. The data loader support loading .tif
+and .czi file (from Zeiss) format.
+"""
+
 import dataclasses
 import glob
 import os

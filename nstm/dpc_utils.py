@@ -1,8 +1,13 @@
-# dpc_utils.py - Description:
-#  Differerntial phase contrast related functions. This script heavily references from Zack Philips's Color DPC code.
-# Created by Ruiming Cao on May 09, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Utility functions for differential phase contrast (DPC) imaging.
+
+This module contains the utility functions for differential phase contrast (DPC) imaging. The functions include loading
+illumination patterns, generating source patterns, generating transfer functions, and conventional Tikhonov solver.
+
+This script heavily references from these two repositories:
+https://github.com/Waller-Lab/DPC
+https://github.com/Waller-Lab/DPC_withAberrationCorrection
+"""
 
 import numpy as np
 from skimage import io as skimageio

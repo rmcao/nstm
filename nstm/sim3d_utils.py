@@ -1,9 +1,10 @@
-# sim3d_utils.py - Description:
-#  Utility functions for 3D SIM reconstruction. Some functions are heavily referenced from the cuda-accelerated
-#  three-beam SIM reconstruction code (https://github.com/scopetools/cudasirecon).
-# Created by Ruiming Cao on Apr 07, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Utility functions for 3D SIM reconstruction.
+
+Some functions are heavily referenced from the `cuda-accelerated three-beam SIM reconstruction code`_.
+
+.. _cuda-accelerated three-beam SIM reconstruction code: https://github.com/scopetools/cudasirecon
+"""
 
 from typing import Tuple, Union, List, Sequence
 from absl import flags
@@ -163,6 +164,8 @@ def generate_sinusoidal(param: Union[SystemParameters, SystemParameters3D],
                         phase: float,
                         order: int,
                         origin_pixel_offset_yx: Tuple[float] = None):
+    """Generate a sinusoidal pattern for 3D SIM."""
+
     if 'dim_yx' in param.__annotations__:
         dim_yx = (param.dim_yx[0] + param.padding_yx[0] * 2, param.dim_yx[1] + param.padding_yx[1] * 2)
         dx = param.pixel_size
@@ -426,10 +429,17 @@ def gen_dampen_order0_mask(param: SystemParameters3D, inverted=False):
     return out
 
 
-def separate_bands(imgs: np.ndarray, # [nphases, z, y, x]
-                   nphases=5, norders=3, out_positive_bands=False):
+def separate_bands(imgs: np.ndarray, nphases: int = 5, norders: int = 3, out_positive_bands: bool = False):
+    """Separate the bands of the raw SIM images.
+
+    Args:
+        imgs (np.ndarray): raw SIM images. [nphases, z, y, x]
+        nphases (int): number of phases.
+        norders (int): number of band orders. Default to 3 orders for three-beam 3D SIM.
+        out_positive_bands (bool): whether to output the positive bands only, or output all bands.
+    """
     nphases_, dim_z, dim_y, dim_x = imgs.shape
-    assert(nphases_ == nphases)
+    assert (nphases_ == nphases)
 
     f_imgs = np.fft.fft2(imgs, axes=(-2, -1))
 

@@ -1,8 +1,5 @@
-# Description:
-#  Supporting modules for speckle flow SIM
-# Written by Ruiming Cao on September 13, 2021
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""General utility functions and dynamic simulation tools used in neural space-time model paper."""
 
 from typing import Tuple, Union, List
 from os import path
@@ -39,6 +36,10 @@ def update_flags(args):
 
 @dataclass
 class SystemParameters:
+    """Imaging system parameters for 2D imaging systems.
+
+    Args:
+        """
     dim_yx: Tuple[int, int]
     wavelength: float
     na: float

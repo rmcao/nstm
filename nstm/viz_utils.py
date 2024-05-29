@@ -1,9 +1,5 @@
-# viz_utils.py - Description:
-#  Common tools for 3D/4D visualization.
-# Created by Ruiming Cao on May 22, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
-
+# -*- coding: utf-8 -*-
+"""Common tools for interactive 3D/4D visualization on Jupyter Notebook and Jupyter Lab."""
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl

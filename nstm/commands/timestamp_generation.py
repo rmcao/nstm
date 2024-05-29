@@ -1,9 +1,5 @@
-# timestamp_generation.py - Description:
-#  Generate estimated timestamps for Zeiss SIM data where the timestamps for raw images are not recorded. Tested on
-#    Zeiss Elyra PS.1.
-# Created by Ruiming Cao on Aug 26, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Generate estimated timestamps for Zeiss SIM data where the timestamps for raw images are not recorded."""
 
 from absl import flags
 from absl import app

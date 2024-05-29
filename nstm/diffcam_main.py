@@ -1,8 +1,5 @@
-# diffcam_main.py - Description:
-#  Main script for rolling-shutter DiffuserCam reconstruction with neural space-time model.
-# Created by Ruiming Cao on Jun 01, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Main script for rolling-shutter DiffuserCam reconstruction with neural space-time model."""
 
 import os
 import numpy as np

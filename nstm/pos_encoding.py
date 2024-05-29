@@ -1,8 +1,10 @@
-# Description:
-#  Jax implementation of the positional encoding for coordinate-based neural networks.
-# Written by Ruiming Cao on December 30, 2022
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Jax implementation of the positional encoding for coordinate-based neural networks.
+
+This module heavily references from the following repository::
+
+    https://github.com/google-research/google-research/tree/master/jaxnerf
+"""
 
 from typing import Union
 

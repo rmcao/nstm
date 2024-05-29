@@ -1,14 +1,15 @@
-# Description:
-#  Jax implementation of hash encoding for accelerated implicit neural representation for 1D-4D scenes.
-#  Our implementation is based on the paper:
-#    Müller, Thomas, et al. "Instant neural graphics primitives with a multiresolution hash encoding." ACM transactions
-#     on graphics (TOG) 41.4 (2022): 1-15.
-#  with a lot of references from this pytorch implementation:
-#    https://github.com/yashbhalgat/HashNeRF-pytorch/blob/main/utils.py
-#
-# Written by Ruiming Cao on November 23, 2022
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Jax implementation of hash encoding for accelerated implicit neural representation for 1D-4D scenes.
+
+Our implementation is based on the paper::
+
+    Müller, Thomas, et al. "Instant neural graphics primitives with a multiresolution hash encoding." ACM transactions
+        on graphics (TOG) 41.4 (2022): 1-15.
+
+Also a lot of references from this pytorch implementation:
+https://github.com/yashbhalgat/HashNeRF-pytorch/blob/main/utils.py
+
+"""
 
 from typing import Tuple, Union
 from functools import partial

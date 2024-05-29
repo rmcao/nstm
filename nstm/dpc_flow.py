@@ -1,8 +1,9 @@
-# dpc_flow.py - Description:
-#  Differential phase contrast with space-time modeling
-# Created by Ruiming Cao on May 08, 2023
-# Contact: rcao@berkeley.edu
-# Website: https://rmcao.github.io
+# -*- coding: utf-8 -*-
+"""Differential phase contrast with space-time modeling.
+
+This module contains the forward models for differential phase contrast (DPC) and differential phase contrast with
+space-time modeling. The loss functions used for the DPC reconstruction are also provided.
+"""
 
 import numpy as np
 import jax.numpy as jnp
@@ -14,19 +15,16 @@ from nstm import spacetime
 
 
 class DPC(cc.forward.Model):
-    optical_param: utils.SystemParameters
-    list_source: np.ndarray
-    precision: str = 'float32'
-    """
-    DPC - Description:
-        Differential phase contrast forward model
-        
+    """Differential phase contrast forward model.
+
     Args:
         optical_param (utils.SystemParameters): Optical parameters of the system.
         list_source (np.ndarray): List of illumination patterns used for the DPC system.
         precision (str, optional): Precision of the model. Defaults to 'float32'.
     """
-
+    optical_param: utils.SystemParameters
+    list_source: np.ndarray
+    precision: str = 'float32'
 
     def setup(self):
         pupil = cc.physics.wave_optics.genPupilNumpy(self.optical_param.dim_yx, self.optical_param.pixel_size,
@@ -35,6 +33,16 @@ class DPC(cc.forward.Model):
                                                        wavelength=self.optical_param.wavelength, shifted_out=False)
 
     def __call__(self, absorption, phase):
+        """Forward pass of the DPC model.
+
+        Args:
+            absorption (jnp.ndarray): The absorption image.
+            phase (jnp.ndarray): The phase image.
+
+        Returns:
+            out (jnp.ndarray): The rendered measurements corresponding to the input absorption and phase images using
+                                 the DPC model with given illumination patterns.
+        """
         out = jnp.fft.ifft2((self.Hu[jnp.newaxis] * jnp.fft.fft2(absorption, axes=(-2, -1))[:, jnp.newaxis]) +
                             (self.Hp[jnp.newaxis] * jnp.fft.fft2(phase, axes=(-2, -1))[:, jnp.newaxis])).real
 
@@ -42,25 +50,23 @@ class DPC(cc.forward.Model):
 
 
 class DPCFlow(cc.forward.Model):
+    """Differential phase contrast with space-time modeling
+
+    Args:
+        optical_param (utils.SystemParameters): Optical parameters of the system.
+        list_source (np.ndarray): List of illumination patterns used for the DPC system.
+        spacetime_param (spacetime.SpaceTimeParameters): Space-time modeling parameters.
+        annealed_epoch (float, optional): The number of annealed epochs for coarse-to-fine optimization.
+                                          Defaults to 1, i.e., no coarse-to-fine.
+        phase_only (bool, optional): Whether to use phase-only input. Defaults to False.
+        precision (str, optional): Precision of the model. Defaults to 'float32'.
+    """
     optical_param: utils.SystemParameters
     list_source: np.ndarray
     spacetime_param: spacetime.SpaceTimeParameters
     annealed_epoch: float = 1
     phase_only: bool = False
     precision: str = 'float32'
-    """
-    DPCFlow - Description:
-        Differential phase contrast with space-time modeling
-    
-    Args:
-        optical_param (utils.SystemParameters): Optical parameters of the system.
-        list_source (np.ndarray): List of illumination patterns used for the DPC system.
-        spacetime_param (spacetime.SpaceTimeParameters): Space-time modeling parameters.
-        annealed_epoch (float, optional): The number of annealed epochs for coarse-to-fine optimization. 
-                                          Defaults to 1, i.e., no coarse-to-fine.
-        phase_only (bool, optional): Whether to use phase-only input. Defaults to False.
-        precision (str, optional): Precision of the model. Defaults to 'float32'.
-    """
 
     def setup(self):
         self.spacetime = spacetime.SpaceTimeMLP(self.optical_param,
@@ -70,14 +76,17 @@ class DPCFlow(cc.forward.Model):
         self.forward = DPC(self.optical_param, self.list_source)
 
     def __call__(self, input_dict):
-        """
-        Forward pass of the DPCFlow model.
+        """Forward pass of the DPC + space-time model.
+
+        The space-time model renders the absorption and phase reconstructions at a given timepoint (in ``input_dict``).
+        The DPC model then renders the measurements based on the absorption and phase reconstructions. The ``epoch``
+        in the ``input_dict`` is used for the coarse-to-fine process during the optimization of the space-time model.
 
         Args:
-            input_dict:
+            input_dict (Dict): A dictionary containing the input timepoints and epochs.
 
         Returns:
-            out: The rendered measurements corresponding to the input timepoints.
+            out (jnp.ndarray): The rendered measurements corresponding to the input timepoints.
         """
         absorp_phase = self.spacetime(input_dict['t'], jnp.zeros((1, 2)),
                                       alpha=input_dict['epoch']/self.annealed_epoch)
