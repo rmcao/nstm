@@ -19,3 +19,5 @@ ipyvolume==0.6.1
 aicspylibczi>=3.0.5
 https://storage.googleapis.com/jax-releases/nocuda/jaxlib-0.3.18-cp39-cp39-manylinux2014_x86_64.whl
 .
+git+https://github.com/rmcao/CalCIL.git
+sphinx-rtd-theme
