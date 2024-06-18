@@ -88,7 +88,7 @@ Locally run the step-by-step example in [this Jupyter notebook](examples/noteboo
 @article{cao2024neural,
   title={Neural space-time model for dynamic scene recovery in multi-shot computational imaging systems},
   author={Cao, Ruiming and Divekar, Nikita and Nu{\~n}ez, James and Upadhyayula, Srigokul and Waller, Laura},
-  journal={bioRxiv},
+  journal={bioRxiv 2024.01.16.575950},
   pages={2024--01},
   year={2024},
   publisher={Cold Spring Harbor Laboratory}
