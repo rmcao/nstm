@@ -11,19 +11,18 @@ Prerequisites
 
 Step-by-step Installation
 -------------------------
-1. Clone this project to your local machine. Or download the zip file and unzip it.
-
-   .. code-block:: bash
-
-      $ git clone https://github.com/rmcao/nstm.git
-      $ git clone https://github.com/rmcao/CalCIL.git
-
-2. Set up & activate virtual env
+1. Create a conda virtual environment and activate it
 
    .. code-block:: bash
 
       $ conda create -n nstm python=3.9
       $ conda activate nstm
+
+2. Clone this project to your local machine. Or download the zip file and unzip it.
+
+   .. code-block:: bash
+
+      $ git clone https://github.com/rmcao/nstm.git
 
 3. Install CUDA and cuDNN in conda virtual env (you may opt to skip this step if you have CUDA installed in your system and you know what you are doing)
 
@@ -44,11 +43,10 @@ Step-by-step Installation
 
       $ conda install -c conda-forge jupyterlab nodejs ipympl
 
-6. pip install the in-house tool and this codebase
+6. pip install this codebase
 
    .. code-block:: bash
 
-      $ pip install -e ./CalCIL
       $ pip install -e ./nstm
 
 7. Test the installation

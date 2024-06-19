@@ -13,7 +13,7 @@ Neural space-time model exploits the temporal redundancy of dynamic scenes. This
 By replacing the reconstruction matrix, neural space-time model can remove motion-induced artifacts and resolve sample dynamics, from the same set of raw measurements used for the conventional reconstruction.
 
 The usage of NSTM is demonstrated through three example imaging systems: differential phase contrast microscopy, 3D structured illumination microscopy, and rolling-shutter DiffuserCam. 
-And there's [a guide to incorporate NSTM into your own imaging system]()!
+And there's [a guide to incorporate NSTM into your own imaging system](https://nstm.readthedocs.io/en/latest/nstm_on_new_system.html)!
 
 Demo on DPC: [![Open DPC Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1QNcRaNjG1CG58ffUURnYPWeIZMuuidZI?usp=sharing)
 
@@ -21,39 +21,29 @@ Demo on SIM: [![Open SIM Demo In Colab](https://colab.research.google.com/assets
 
 ## Installation
 
-1. Clone this project to your local machine. Or download the zip file and unzip it.
-    ```
-    git clone https://github.com/rmcao/nstm.git
-    git clone https://github.com/rmcao/CalCIL.git 
-    ```
+```
+# Create conda environment
+conda create -n nstm python=3.9
+conda activate nstm
 
-2. Set up & activate virtual env
-    ```
-    conda create -n nstm python=3.9
-    conda activate nstm
-    ```
+# Clone this project to your local machine.
+git clone https://github.com/rmcao/nstm.git
 
-3. Install CUDA and cuDNN in conda virtual env (you may opt to skip this step if you have CUDA installed in your system and you know what you are doing)
-    ```
-    conda install -c conda-forge cudatoolkit~=11.8.0 cudnn~=8.8.0
-    conda install -c "nvidia/label/cuda-11.8.0" cuda-nvcc
-    ```
+# Install CUDA and cuDNN in conda virtual env
+conda install -c conda-forge cudatoolkit~=11.8.0 cudnn~=8.8.0
+conda install -c "nvidia/label/cuda-11.8.0" cuda-nvcc
 
-4. Install jaxlib. Note that the following command is for CUDA 11.x and cuDNN 8.2+. If you have different versions of CUDA, please refer to [JAX installation guide](https://jax.readthedocs.io/en/latest/installation.html) and make sure to match the version numbers of jaxlib and jax (as specified in requirements.txt).
-    ```
-    pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-    ```
+# Install jaxlib for GPU
+pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
-5. Install optional dependencies for interactive visualization via Jupyter lab
-    ```
-    conda install -c conda-forge jupyterlab nodejs ipympl
-    ```
+# (optional) Install dependencies for interactive visualization via Jupyter lab
+conda install -c conda-forge jupyterlab nodejs ipympl
 
-6. pip install the in-house tool and this codebase
-    ```
-    pip install -e ./CalCIL
-    pip install -e ./nstm
-    ```
+# Install this codebase
+pip install -e ./nstm
+```
+
+Note that the above command are for CUDA 11.x and cuDNN 8.2+. If you have different versions of CUDA, please refer to [JAX installation guide](https://jax.readthedocs.io/en/latest/installation.html) and make sure to match the version numbers of jaxlib and jax (as specified in requirements.txt).
 
 ## Application on Differential Phase Contrast Microscopy (DPC)
 Locally run the step-by-step example in [this Jupyter notebook](examples/notebook-DPC.ipynb) or run on Google Colab [![Open DPC Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1QNcRaNjG1CG58ffUURnYPWeIZMuuidZI?usp=sharing)

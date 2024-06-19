@@ -17,3 +17,4 @@ matplotlib~=3.7.0
 ipydatawidgets==4.3.2
 ipyvolume==0.6.1
 aicspylibczi>=3.0.5
+-e git+https://github.com/rmcao/CalCIL.git
