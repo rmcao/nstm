@@ -1,10 +1,14 @@
 # 🚀⏱️ Neural Space-time Model for dynamic multi-shot imaging
-
+<p align="center">
 <img src="assets/spacetime_cover_by_DALLE.png" alt="drawing" width="300"/>
+</p>
 
-[![Project Page](https://img.shields.io/badge/Project_Page-coming_soon-blue)]()
-[![bioRxiv](https://img.shields.io/badge/bioRxiv-2024.01.16.575950-b31b1b.svg?style=flat)](https://www.biorxiv.org/content/10.1101/2024.01.16.575950)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+<p align="center">
+    <a style="text-decoration:none !important;" alt="project page"><img src="https://img.shields.io/badge/Project_Page-coming_soon-blue" /></a>
+    <a style="text-decoration:none !important;" href="https://nstm.readthedocs.io/en/latest/" alt="documentation"> <img src="https://img.shields.io/badge/API-docs-34B167" /></a>
+    <a style="text-decoration:none !important;" href="https://www.biorxiv.org/content/10.1101/2024.01.16.575950" alt="paper"> <img src="https://img.shields.io/badge/bioRxiv-2024.01.16.575950-b31b1b.svg?style=flat" /></a>
+    <a style="text-decoration:none !important;" href="https://opensource.org/licenses/BSD-3-Clause" alt="License"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" /></a>
+</p>
 
 
 **_Neural space-time model (NSTM)_** is a computational image reconstruction framework that can jointly estimate the scene and its motion dynamics by modeling its spatiotemporal relationship, _without data priors or pre-training_. 
@@ -14,6 +18,8 @@ By replacing the reconstruction matrix, neural space-time model can remove motio
 
 The usage of NSTM is demonstrated through three example imaging systems: differential phase contrast microscopy, 3D structured illumination microscopy, and rolling-shutter DiffuserCam. 
 And there's [a guide to incorporate NSTM into your own imaging system](https://nstm.readthedocs.io/en/latest/nstm_on_new_system.html)!
+
+**See the full documentation [here](https://nstm.readthedocs.io/en/latest/) and the original paper [here](https://www.biorxiv.org/content/10.1101/2024.01.16.575950).**
 
 Demo on DPC: [![Open DPC Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1QNcRaNjG1CG58ffUURnYPWeIZMuuidZI?usp=sharing)
 
