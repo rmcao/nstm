@@ -45,7 +45,8 @@ pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-
 # (optional) Install dependencies for interactive visualization via Jupyter lab
 conda install -c conda-forge jupyterlab nodejs ipympl
 
-# Install this codebase
+# Install a helper library and this codebase
+pip install git+https://github.com/rmcao/CalCIL.git
 pip install -e ./nstm
 ```
 

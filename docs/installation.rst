@@ -43,10 +43,11 @@ Step-by-step Installation
 
       $ conda install -c conda-forge jupyterlab nodejs ipympl
 
-6. pip install this codebase
+6. Install the helper library and this codebase
 
    .. code-block:: bash
 
+      $ pip install git+https://github.com/rmcao/CalCIL.git
       $ pip install -e ./nstm
 
 7. Test the installation
