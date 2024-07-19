@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-    <a style="text-decoration:none !important;" alt="project page"><img src="https://img.shields.io/badge/Project_Page-coming_soon-blue" /></a>
+    <a style="text-decoration:none !important;" href="https://doi.org/10.5281/zenodo.12786083" alt="DOI"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.12786083.svg" /></a>
     <a style="text-decoration:none !important;" href="https://nstm.readthedocs.io/en/latest/" alt="documentation"> <img src="https://img.shields.io/badge/API-docs-34B167" /></a>
     <a style="text-decoration:none !important;" href="https://www.biorxiv.org/content/10.1101/2024.01.16.575950" alt="paper"> <img src="https://img.shields.io/badge/bioRxiv-2024.01.16.575950-b31b1b.svg?style=flat" /></a>
     <a style="text-decoration:none !important;" href="https://opensource.org/licenses/BSD-3-Clause" alt="License"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" /></a>
