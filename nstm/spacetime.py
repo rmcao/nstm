@@ -85,7 +85,7 @@ class MLPParameters:
     net_depth: int
     net_width: int
     net_activation: Callable[..., Any]
-    skip_layer: int
+    skip_layer: int = 4
     kernel_init: Callable = jax.nn.initializers.glorot_uniform()
 
 
