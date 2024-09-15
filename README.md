@@ -27,31 +27,7 @@ Demo on SIM: [![Open SIM Demo In Colab](https://colab.research.google.com/assets
 
 ## Installation
 
-```
-# Create conda environment
-conda create -n nstm python=3.9
-conda activate nstm
-
-# Clone this project to your local machine.
-git clone https://github.com/rmcao/nstm.git
-
-# Install CUDA and cuDNN in conda virtual env
-conda install -c conda-forge cudatoolkit~=11.8.0 cudnn~=8.8.0
-conda install -c "nvidia/label/cuda-11.8.0" cuda-nvcc
-
-# Install jaxlib for GPU
-pip install 'numpy<2.0.0'
-pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-
-# (optional) Install dependencies for interactive visualization via Jupyter lab
-conda install -c conda-forge jupyterlab nodejs ipympl
-
-# Install a helper library and this codebase
-pip install git+https://github.com/rmcao/CalCIL.git
-pip install -e ./nstm
-```
-
-Note that the above command are for CUDA 11.x and cuDNN 8.2+. If you have different versions of CUDA, please refer to [JAX installation guide](https://jax.readthedocs.io/en/latest/installation.html) and make sure to match the version numbers of jaxlib and jax (as specified in requirements.txt).
+Installation instructions are available in the [documentation](https://nstm.readthedocs.io/en/latest/installation.html).
 
 ## Application on Differential Phase Contrast Microscopy (DPC)
 Locally run the step-by-step example in [this Jupyter notebook](examples/notebook-DPC.ipynb) or run on Google Colab [![Open DPC Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1QNcRaNjG1CG58ffUURnYPWeIZMuuidZI?usp=sharing)
