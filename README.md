@@ -40,6 +40,7 @@ conda install -c conda-forge cudatoolkit~=11.8.0 cudnn~=8.8.0
 conda install -c "nvidia/label/cuda-11.8.0" cuda-nvcc
 
 # Install jaxlib for GPU
+pip install 'numpy<2.0.0'
 pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 # (optional) Install dependencies for interactive visualization via Jupyter lab

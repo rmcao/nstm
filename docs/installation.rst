@@ -35,6 +35,7 @@ Step-by-step Installation
 
    .. code-block:: bash
 
+      $ pip install 'numpy<2.0.0'
       $ pip install jaxlib==0.3.18+cuda11.cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 5. Install optional dependencies for interactive visualization via Jupyter lab
