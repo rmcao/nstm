@@ -6,7 +6,7 @@
 <p align="center">
     <a style="text-decoration:none !important;" href="https://doi.org/10.5281/zenodo.12786083" alt="DOI"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.12786083.svg" /></a>
     <a style="text-decoration:none !important;" href="https://nstm.readthedocs.io/en/latest/" alt="documentation"> <img src="https://img.shields.io/badge/API-docs-34B167" /></a>
-    <a style="text-decoration:none !important;" href="https://www.biorxiv.org/content/10.1101/2024.01.16.575950" alt="paper"> <img src="https://img.shields.io/badge/bioRxiv-2024.01.16.575950-b31b1b.svg?style=flat" /></a>
+    <a style="text-decoration:none !important;" href="https://www.nature.com/articles/s41592-024-02417-0" alt="paper"> <img src="https://img.shields.io/badge/paper-pdf-b31b1b.svg?style=flat" /></a>
     <a style="text-decoration:none !important;" href="https://opensource.org/licenses/BSD-3-Clause" alt="License"><img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" /></a>
 </p>
 
@@ -19,7 +19,7 @@ By replacing the reconstruction matrix, neural space-time model can remove motio
 The usage of NSTM is demonstrated through three example imaging systems: differential phase contrast microscopy, 3D structured illumination microscopy, and rolling-shutter DiffuserCam. 
 And there's [a guide to incorporate NSTM into your own imaging system](https://nstm.readthedocs.io/en/latest/nstm_on_new_system.html)!
 
-**See the full documentation [here](https://nstm.readthedocs.io/en/latest/) and the original paper [here](https://www.biorxiv.org/content/10.1101/2024.01.16.575950).**
+**See the full documentation [here](https://nstm.readthedocs.io/en/latest/) and the original paper [here](https://www.nature.com/articles/s41592-024-02417-0).**
 
 Demo on DPC: [![Open DPC Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1QNcRaNjG1CG58ffUURnYPWeIZMuuidZI?usp=sharing)
 
@@ -60,11 +60,11 @@ Locally run the step-by-step example in [this Jupyter notebook](examples/noteboo
 ## Paper
 ```
 @article{cao2024neural,
-  title={Neural space-time model for dynamic scene recovery in multi-shot computational imaging systems},
-  author={Cao, Ruiming and Divekar, Nikita and Nu{\~n}ez, James and Upadhyayula, Srigokul and Waller, Laura},
-  journal={bioRxiv 2024.01.16.575950},
-  pages={2024--01},
+  title={Neural space--time model for dynamic multi-shot imaging},
+  author={Cao, Ruiming and Divekar, Nikita S and Nu{\~n}ez, James K and Upadhyayula, Srigokul and Waller, Laura},
+  journal={Nature Methods},
+  pages={1--6},
   year={2024},
-  publisher={Cold Spring Harbor Laboratory}
+  publisher={Nature Publishing Group US New York}
 }
 ```
