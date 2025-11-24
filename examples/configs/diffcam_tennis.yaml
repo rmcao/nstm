@@ -1,3 +1,6 @@
+# raw data and PSF for rolling shutter diffuser cam can be found in Nick's website:
+# https://www.nickantipa.com/antipa_files/hsvideo_code_with_data.zip
+# https://www.nickantipa.com
 raw_path: ./examples/diffusercam_data_from_NickAntipa/tennis_bounce_00182.tif
 psf_path: ./examples/diffusercam_data_from_NickAntipa/psf_averaged_2018-12-5.tif
 save_path: ./examples/checkpoint/tennis/
