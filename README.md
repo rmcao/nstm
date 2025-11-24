@@ -42,20 +42,34 @@ Locally run the step-by-step example in [this Jupyter notebook](examples/noteboo
 **Option 1:** Step-by-step example on [Jupyter notebook](examples/notebook-SIM.ipynb) with dense microbead data. You may also run this on Google Colab [![Open SIM Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1rxRBrBgQgedR4DW7wITcdJVFVCqC0dcQ?usp=sharing)
 
 **Option 2:** Run the python script for reconstruction
-0. Download additional data from [Google Drive](https://drive.google.com/drive/folders/1GkjU4gFv-DswJnui4WiVChe6Lz5RBau1) and place .npz files in `examples` folder.
-1. Start running endoplasmic reticulum (ER)-labeled cell reconstruction in commandline. Replace `er_cell` with `mito_cell` for mitochondria-labeled cell data.
+
+1. Download additional data from [Google Drive](https://drive.google.com/drive/folders/1GkjU4gFv-DswJnui4WiVChe6Lz5RBau1) and place .npz files in `examples` folder.
+
+2. Start running endoplasmic reticulum (ER)-labeled cell reconstruction in commandline. Replace `er_cell` with `mito_cell` for mitochondria-labeled cell data.
    ```
    python nstm/sim3d_main.py --config er_cell
    ```
    The `mito_cell` reconstruction takes ~40 minutes (slightly faster for `er_cell`) on a single NVIDIA A6000 GPU (48GB). `er_cell` is also runnable on a single NVIDIA RTX 3090 GPU (24GB) when `batch_size` is set to 1 in the .yaml file. `mito_cell` requires close to 40GB GPU memory to run, as it has more image planes.
-2. The reconstruction results will be saved in `examples/checkpoint/` folder. The 3D reconstruction volume with three timepoints (each corresponding to an illumination orientation) will be saved as `recon_filtered.tif`, and can be viewed using [Fiji](https://imagej.net/Fiji/Downloads). The recovered motion map will be saved as `motion_dense_t.npy`.
 
-3. Additional reconstruction parameters are stored in `examples/configs/er_cell.yaml` and `examples/configs/mito_cell.yaml`. To print the full parameter descriptions, run:
+3. The reconstruction results will be saved in `examples/checkpoint/` folder. The 3D reconstruction volume with three timepoints (each corresponding to an illumination orientation) will be saved as `recon_filtered.tif`, and can be viewed using [Fiji](https://imagej.net/Fiji/Downloads). The recovered motion map will be saved as `motion_dense_t.npy`.
+
+4. Additional reconstruction parameters are stored in `examples/configs/er_cell.yaml` and `examples/configs/mito_cell.yaml`. To print the full parameter descriptions, run:
    ```
    python nstm/sim3d_main.py --helpfull
    ```
 
 ![3D SIM results](assets/SIM-mito.gif)
+
+## Application on Rolling-shutter DiffuserCam
+
+1. Download the original data from [Nick Antipa's website](https://www.nickantipa.com/antipa_files/hsvideo_code_with_data.zip), and move tennis_bounce_00182.tif and psf_averaged_2018-12-5.tif to the corresponding locations specified in the [config file](https://github.com/rmcao/nstm/blob/main/examples/configs/diffcam_tennis.yaml).
+
+2. Start the reconstruction in commandline.
+   ```
+   python nstm/diffcam_main --config diffcam_tennis
+   ```
+
+![Rolling-shutter DiffuserCam result](assets/Diffcam-tennis.gif)
 
 ## Paper
 ```
